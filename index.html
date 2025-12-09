@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Bookmarklet de Captura de Página</title>
+    <title>Gerador de Bookmarklet Interativo</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -21,14 +21,15 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.1);
         }
         h1, h2 {
-            color: #1a73e8;
+            color: #1d3557; /* Azul escuro */
             border-bottom: 2px solid #e0e0e0;
             padding-bottom: 10px;
         }
         h1 { font-size: 2em; }
         h2 { font-size: 1.5em; margin-top: 30px; }
         code {
-            background-color: #e8f0fe;
+            background-color: #f1faee;
+            color: #1d3557;
             padding: 2px 5px;
             border-radius: 4px;
             font-family: "SF Mono", "Fira Code", "Consolas", monospace;
@@ -52,10 +53,14 @@
         .bookmarklet-code {
             margin-top: 15px;
         }
-        .warning {
-            background-color: #fffbe6;
-            border: 1px solid #ffe58f;
-            padding: 15px;
+        .highlight {
+            color: #e63946; /* Vermelho */
+            font-weight: bold;
+        }
+        .final-step {
+            background-color: #f1faee;
+            border: 1px solid #a8dadc;
+            padding: 20px;
             border-radius: 8px;
             margin-top: 20px;
         }
@@ -63,35 +68,34 @@
 </head>
 <body>
     <div class="container">
-        <h1>Gerador de Bookmarklet para Captura de Página</h1>
-        <p>Esta página contém as instruções para criar seu "botão" de captura automática de tela. Siga os passos abaixo.</p>
+        <h1>Captura de Página Interativa (Versão Final)</h1>
+        <p>Esta é a versão final e mais poderosa da ferramenta. Ela permite que você <span class="highlight">escolha qual parte da página capturar</span>, resolvendo o problema de sites com múltiplas áreas de rolagem.</p>
 
         <div class="instructions">
-            <h2>Passo 1: Copie o Código do Bookmarklet</h2>
-            <p>Selecione e copie todo o código da caixa de texto abaixo.</p>
+            <h2>Passo 1: Copie o Código Final</h2>
+            <p>Selecione e copie todo o código da caixa de texto abaixo. Este código é diferente e mais inteligente que os anteriores.</p>
             <div class="bookmarklet-code">
-                <textarea id="bookmarklet-code" readonly>javascript:(function(){var d=document;var i=d.createElement('div');i.style.position='fixed';i.style.top='20px';i.style.left='50%';i.style.transform='translateX(-50%)';i.style.padding='10px 20px';i.style.backgroundColor='rgba(0,0,0,0.8)';i.style.color='white';i.style.borderRadius='5px';i.style.zIndex='99999';i.style.fontSize='16px';i.style.fontFamily='sans-serif';i.innerHTML='Iniciando captura...';d.body.appendChild(i);function l(s,c){var e=d.createElement('script');e.src=s;e.onload=c;d.head.appendChild(e)}l('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',function(){l('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',function(){i.innerHTML='Capturando... por favor, aguarde.';var{jsPDF}=window.jspdf;html2canvas(d.body,{useCORS:true,allowTaint:true,scrollY:-window.scrollY}).then(function(c){i.innerHTML='Gerando PDF...';var w=c.width;var h=c.height;var o=w>h?'l':'p';var pdf=new jsPDF({orientation:o,unit:'px',format:[w,h],hotfixes:['px_scaling']});pdf.addImage(c.toDataURL('image/jpeg',0.95),'JPEG',0,0,w,h);pdf.save('captura-de-pagina.pdf');d.body.removeChild(i)}).catch(function(e){console.error(e);i.style.backgroundColor='red';i.innerHTML='Erro ao capturar. Verifique o console (F12).';setTimeout(function(){d.body.removeChild(i)},5000)})})})})()</textarea>
+                <textarea id="bookmarklet-code" readonly>javascript:(function(){var s=document.createElement('style');s.id='h2c-bm-style';s.innerHTML='[data-h2c-bm-highlight]:hover{outline:3px solid #e63946 !important;background-color:rgba(230,57,70,0.2) !important;cursor:pointer;}';document.head.appendChild(s);var o=document.createElement('div');o.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:12px 25px;background-color:rgba(29,53,87,0.95);color:white;border-radius:8px;z-index:99999;font-size:16px;font-family:sans-serif;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);';o.innerHTML='<span style="font-weight:bold;">Modo de Seleção:</span> Passe o mouse e <strong>CLIQUE</strong> na área de rolagem para capturar.';document.body.appendChild(o);function a(e){document.querySelectorAll('[data-h2c-bm-highlight]').forEach(function(t){t.removeAttribute('data-h2c-bm-highlight')});if(e.target!==o&&!o.contains(e.target)){e.target.setAttribute('data-h2c-bm-highlight','true')}}document.body.addEventListener('mousemove',a);function c(e){e.preventDefault();e.stopPropagation();var t=e.target;document.body.removeEventListener('mousemove',a);document.body.removeEventListener('click',c,true);document.querySelectorAll('[data-h2c-bm-highlight]').forEach(function(e){e.removeAttribute('data-h2c-bm-highlight')});var l=document.getElementById('h2c-bm-style');if(l){l.remove()}o.innerHTML='Carregando...';function n(s,c){var e=document.createElement('script');e.src=s;e.onload=c;document.head.appendChild(e)}n('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',function(){n('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',function(){o.innerHTML='Capturando elemento...';var{jsPDF:e}=window.jspdf;html2canvas(t,{useCORS:true,allowTaint:true,height:t.scrollHeight,width:t.scrollWidth}).then(function(c){o.innerHTML='Gerando PDF...';var n=c.width,d=c.height,i=n>d?'l':'p',r=new e({orientation:i,unit:'px',format:[n,d],hotfixes:['px_scaling']});r.addImage(c.toDataURL('image/jpeg',0.95),'JPEG',0,0,n,d);r.save('captura-de-elemento.pdf');document.body.removeChild(o)}).catch(function(e){console.error('Erro no html2canvas:',e);o.style.backgroundColor='#e63946';o.innerHTML='Erro ao capturar. Verifique o console (F12).';setTimeout(function(){if(o.parentNode){document.body.removeChild(o)}},5000)})})})}document.body.addEventListener('click',c,true)})();</textarea>
             </div>
 
-            <h2>Passo 2: Crie um Novo Favorito (Bookmark)</h2>
+            <h2>Passo 2: Crie ou Atualize seu Favorito</h2>
             <ol>
-                <li>Clique com o botão direito na sua barra de favoritos e selecione <strong>"Adicionar página..."</strong> ou <strong>"Adicionar favorito..."</strong>.</li>
-                <li>No campo <strong>"Nome"</strong>, digite algo fácil de lembrar, como <code>Capturar Página</code>.</li>
-                <li>No campo <strong>"URL"</strong> ou <strong>"Endereço"</strong>, **apague o que estiver lá** e **cole o código** que você copiou do Passo 1.</li>
-                <li>Salve o favorito.</li>
-            </ol>
-
-            <h2>Passo 3: Use a Ferramenta</h2>
-            <ol>
-                <li>Navegue até a página que você deseja capturar.</li>
-                <li>Clique no favorito <strong>"Capturar Página"</strong> que você acabou de criar.</li>
-                <li>Uma mensagem de "Capturando..." aparecerá. Aguarde alguns segundos (pode demorar em páginas muito longas).</li>
-                <li>O download do arquivo <code>captura-de-pagina.pdf</code> começará automaticamente.</li>
+                <li>Se você já criou o favorito antes, edite-o. Clique com o botão direito sobre ele e escolha "Editar".</li>
+                <li>No campo <strong>"URL"</strong>, apague todo o código antigo e cole este novo código.</li>
+                <li>Se for criar um novo, o processo é o mesmo: crie um favorito, dê um nome (ex: <code>Captura Interativa</code>) e cole o código na URL.</li>
+                <li>Salve.</li>
             </ol>
         </div>
 
-        <div class="warning">
-            <strong>Aviso:</strong> A captura pode não funcionar perfeitamente em 100% dos sites, especialmente aqueles com conteúdo protegido ou estruturas muito complexas (iframes, etc.). No entanto, esta abordagem é o padrão da indústria e funciona na grande maioria dos casos.
+        <div class="final-step">
+            <h2>Passo 3: Como Usar a Ferramenta Interativa</h2>
+            <ol>
+                <li>Vá para a página complexa que você quer capturar.</li>
+                <li>Clique no seu favorito <strong>"Captura Interativa"</strong>.</li>
+                <li>A página entrará em "Modo de Seleção". Passe o mouse sobre as áreas da página e veja elas sendo destacadas.</li>
+                <li><span class="highlight">Clique exatamente sobre a área que contém o conteúdo e a barra de rolagem.</span></li>
+                <li>Aguarde. A ferramenta irá capturar todo o conteúdo daquele elemento específico e iniciará o download do PDF.</li>
+            </ol>
         </div>
     </div>
 </body>
