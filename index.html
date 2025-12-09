@@ -3,42 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Captura de Rolagem Manual para PDF</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Gerador de Bookmarklet de Captura de Página</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f9;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #1a73e8;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        h1 { font-size: 2em; }
+        h2 { font-size: 1.5em; margin-top: 30px; }
+        code {
+            background-color: #e8f0fe;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+        }
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+            font-size: 0.9em;
+            resize: vertical;
+        }
+        .instructions ol {
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        .bookmarklet-code {
+            margin-top: 15px;
+        }
+        .warning {
+            background-color: #fffbe6;
+            border: 1px solid #ffe58f;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Captura de Rolagem Manual para PDF</h1>
+        <h1>Gerador de Bookmarklet para Captura de Página</h1>
+        <p>Esta página contém as instruções para criar seu "botão" de captura automática de tela. Siga os passos abaixo.</p>
+
         <div class="instructions">
-            <h2>Como Usar:</h2>
+            <h2>Passo 1: Copie o Código do Bookmarklet</h2>
+            <p>Selecione e copie todo o código da caixa de texto abaixo.</p>
+            <div class="bookmarklet-code">
+                <textarea id="bookmarklet-code" readonly>javascript:(function(){var d=document;var i=d.createElement('div');i.style.position='fixed';i.style.top='20px';i.style.left='50%';i.style.transform='translateX(-50%)';i.style.padding='10px 20px';i.style.backgroundColor='rgba(0,0,0,0.8)';i.style.color='white';i.style.borderRadius='5px';i.style.zIndex='99999';i.style.fontSize='16px';i.style.fontFamily='sans-serif';i.innerHTML='Iniciando captura...';d.body.appendChild(i);function l(s,c){var e=d.createElement('script');e.src=s;e.onload=c;d.head.appendChild(e)}l('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',function(){l('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',function(){i.innerHTML='Capturando... por favor, aguarde.';var{jsPDF}=window.jspdf;html2canvas(d.body,{useCORS:true,allowTaint:true,scrollY:-window.scrollY}).then(function(c){i.innerHTML='Gerando PDF...';var w=c.width;var h=c.height;var o=w>h?'l':'p';var pdf=new jsPDF({orientation:o,unit:'px',format:[w,h],hotfixes:['px_scaling']});pdf.addImage(c.toDataURL('image/jpeg',0.95),'JPEG',0,0,w,h);pdf.save('captura-de-pagina.pdf');d.body.removeChild(i)}).catch(function(e){console.error(e);i.style.backgroundColor='red';i.innerHTML='Erro ao capturar. Verifique o console (F12).';setTimeout(function(){d.body.removeChild(i)},5000)})})})})()</textarea>
+            </div>
+
+            <h2>Passo 2: Crie um Novo Favorito (Bookmark)</h2>
             <ol>
-                <li>Clique em <strong>"1. Iniciar Captura"</strong> e escolha a aba/janela do navegador que deseja capturar.</li>
-                <li>Na aba do site, role a página (seja a principal ou uma interna) até uma nova área ficar visível.</li>
-                <li>Volte para esta página e clique em <strong>"2. Capturar Frame"</strong>. Uma miniatura da captura aparecerá abaixo.</li>
-                <li>Repita os passos 2 e 3 até ter capturado toda a área desejada.</li>
-                <li>Quando terminar, clique em <strong>"3. Gerar PDF"</strong> para baixar o arquivo final.</li>
+                <li>Clique com o botão direito na sua barra de favoritos e selecione <strong>"Adicionar página..."</strong> ou <strong>"Adicionar favorito..."</strong>.</li>
+                <li>No campo <strong>"Nome"</strong>, digite algo fácil de lembrar, como <code>Capturar Página</code>.</li>
+                <li>No campo <strong>"URL"</strong> ou <strong>"Endereço"</strong>, **apague o que estiver lá** e **cole o código** que você copiou do Passo 1.</li>
+                <li>Salve o favorito.</li>
+            </ol>
+
+            <h2>Passo 3: Use a Ferramenta</h2>
+            <ol>
+                <li>Navegue até a página que você deseja capturar.</li>
+                <li>Clique no favorito <strong>"Capturar Página"</strong> que você acabou de criar.</li>
+                <li>Uma mensagem de "Capturando..." aparecerá. Aguarde alguns segundos (pode demorar em páginas muito longas).</li>
+                <li>O download do arquivo <code>captura-de-pagina.pdf</code> começará automaticamente.</li>
             </ol>
         </div>
 
-        <div class="controls">
-            <button id="start-capture">1. Iniciar Captura</button>
-            <button id="capture-frame" disabled>2. Capturar Frame</button>
-            <button id="generate-pdf" disabled>3. Gerar PDF</button>
-        </div>
-
-        <div class="preview-area">
-            <h2>Miniaturas dos Frames Capturados</h2>
-            <div id="preview-container">
-                <!-- Miniaturas aparecerão aqui -->
-            </div>
+        <div class="warning">
+            <strong>Aviso:</strong> A captura pode não funcionar perfeitamente em 100% dos sites, especialmente aqueles com conteúdo protegido ou estruturas muito complexas (iframes, etc.). No entanto, esta abordagem é o padrão da indústria e funciona na grande maioria dos casos.
         </div>
     </div>
-
-    <!-- Elemento de vídeo oculto para receber o stream da tela -->
-    <video id="video" autoplay playsinline style="display:none;"></video>
-
-    <!-- Biblioteca para gerar o PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
