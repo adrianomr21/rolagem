@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captura de Rolagem Manual para PDF</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Captura de Rolagem Manual para PDF</h1>
+        <div class="instructions">
+            <h2>Como Usar:</h2>
+            <ol>
+                <li>Clique em <strong>"1. Iniciar Captura"</strong> e escolha a aba/janela do navegador que deseja capturar.</li>
+                <li>Na aba do site, role a página (seja a principal ou uma interna) até uma nova área ficar visível.</li>
+                <li>Volte para esta página e clique em <strong>"2. Capturar Frame"</strong>. Uma miniatura da captura aparecerá abaixo.</li>
+                <li>Repita os passos 2 e 3 até ter capturado toda a área desejada.</li>
+                <li>Quando terminar, clique em <strong>"3. Gerar PDF"</strong> para baixar o arquivo final.</li>
+            </ol>
+        </div>
+
+        <div class="controls">
+            <button id="start-capture">1. Iniciar Captura</button>
+            <button id="capture-frame" disabled>2. Capturar Frame</button>
+            <button id="generate-pdf" disabled>3. Gerar PDF</button>
+        </div>
+
+        <div class="preview-area">
+            <h2>Miniaturas dos Frames Capturados</h2>
+            <div id="preview-container">
+                <!-- Miniaturas aparecerão aqui -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Elemento de vídeo oculto para receber o stream da tela -->
+    <video id="video" autoplay playsinline style="display:none;"></video>
+
+    <!-- Biblioteca para gerar o PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
